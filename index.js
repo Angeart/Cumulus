@@ -14,6 +14,7 @@ var settings       = require('electron-settings')
 settings.setPath(
   Path.resolve(App.getPath('userData'), 'config.json')
 )
+const { default: installExtension, REACT_DEVELOPER_TOOLS } = require("electron-devtools-installer");
 
 var menubar        = require('menubar')
 var mb             = menubar({
@@ -64,7 +65,11 @@ mb.on('ready', function() {
     mb.window.loadURL('file://' + __dirname + '/app/index.html')
     mb.window.on('focus', function() { _sendWindowEvent('focus') })
     if (debug) {
-      mb.window.openDevTools()
+      console.log('debug mode')
+      mb.window.webContents.openDevTools()
+      installExtension(REACT_DEVELOPER_TOOLS)
+      .then(name => console.log(name))
+      .catch(err => console.log(err));
     }
   }
 
