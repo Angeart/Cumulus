@@ -1,6 +1,7 @@
 'use strict';
 
 var packageJson = require('./package.json')
+const sass = require('node-sass')
 
 module.exports = function(grunt) {
 
@@ -42,13 +43,13 @@ module.exports = function(grunt) {
     },
     sass: {
       dev: {
-        options: { outputStyle: 'expanded' },
+        options: { outputStyle: 'expanded', implementation: sass, sourceMap: true },
         files: {
           'app/css/app.css': 'app/scss/app.scss'
         }
       },
       dist: {
-        options: { outputStyle: 'compressed' },
+        options: { outputStyle: 'compressed', implementation: sass, sourceMap: true },
         files: {
           'app/css/app.css': 'app/scss/app.scss'
         }
