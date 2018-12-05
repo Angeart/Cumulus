@@ -11,6 +11,8 @@ var _track = {}          // Current track information
 var _audio = new Audio() // Current audio element
 
 _audio.volume = +localStorage.getItem('lastVolume') || 1
+_audio.shuffle = false
+_audio.shuffle_disabled = false
 
 function _showNotification(track) {
   if (document.visibilityState !== 'hidden') return
@@ -75,6 +77,10 @@ function _toggleLikeTrack(track) {
   _track.user_favorite = !track.user_favorite
 }
 
+function _toggleShuffleTrack() {
+  _audio.shuffle = !_audio.shuffle
+}
+
 (function addListeners() {
 
   _audio.addEventListener('loadstart', function() {
@@ -114,6 +120,14 @@ TrackStore = McFly.createStore({
 
   switch (payload.actionType) {
 
+    case 'VISIBLE_TAB':
+      console.log(payload.tab)
+      if (payload.tab !== 'likes')
+        _audio.shuffle_disabled = true
+      else
+        _audio.shuffle_disabled = false
+      break
+
     case 'PLAY_TRACK':
 
       if (!payload.track && _.isEmpty(_audio.src))
@@ -152,6 +166,10 @@ TrackStore = McFly.createStore({
     case 'LIKE_TRACK':
     case 'UNLIKE_TRACK':
       _toggleLikeTrack(payload.track)
+      break
+
+    case 'SHUFFLE_TRACK':
+      _toggleShuffleTrack()
       break
   }
 

@@ -61,11 +61,12 @@
       margin-top: 8px;
     }
 
-    .meta__favorite, .meta__settings, .icon__toggle {
+    .meta__shuffle, .meta__favorite, .meta__settings, .icon__toggle {
       font-size: 16px;
     }
 
-    .meta__favorite i {
+    .meta__favorite i,
+    .meta__shuffle:not(:disabled) i {
       &.fi { background-color: $grey-300; }
       &.active { background-color: $soundcloud; }
     }

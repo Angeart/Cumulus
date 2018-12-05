@@ -145,6 +145,12 @@ actions = McFly.createActions({
     }
   },
 
+  shuffleTrack: function() {
+    return {
+      'actionType' : 'SHUFFLE_TRACK'
+    }
+  },
+
   /**
    * Collections
    */

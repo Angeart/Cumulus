@@ -108,6 +108,10 @@ var MediaPlayer = React.createClass({
     Actions.likeTrack(this.state.track)
   },
 
+  shuffle: function() {
+    Actions.shuffleTrack()
+  },
+
   seek: function(event) {
     if (!this.state.audio.src) return
 
@@ -243,7 +247,7 @@ var MediaPlayer = React.createClass({
       ? this.state.track.user.avatar_url
       : '')
 
-    var playPause = this.state.audio.paused || this.state.audio.error
+    var playPause = this.state.audio.paused || this.state.audio.error
       ? '\uf198'
       : '\uf191'
 
@@ -268,6 +272,11 @@ var MediaPlayer = React.createClass({
     var favoriteStyle = classNames({
       'fi'     : true,
       'active' : !!this.state.track.user_favorite
+    })
+
+    var shuffleStyle = classNames({
+      'fi'     : true,
+      'active' : !!this.state.audio.shuffle
     })
 
     return (
@@ -333,6 +342,9 @@ var MediaPlayer = React.createClass({
             </div>
 
             <div className="controls__actions">
+              <button className="meta__shuffle" onClick={this.shuffle} disabled={this.state.audio.shuffle_disabled}>
+                <i className={shuffleStyle}>{'\uf1b2'}</i>
+              </button>
               <button className="meta__favorite" onClick={this.like} disabled={!this.state.audio.src}>
                 <i className={favoriteStyle}>{'\uf159'}</i>
               </button>
